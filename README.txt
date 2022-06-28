@@ -42,3 +42,15 @@ $ErrorActionPreference = "Stop"
 #     "Û"="\u00DB", 
 #     "Ç"="\u00C7", 
 # }
+
+##
+Para dar permissões aos utilizadores usar:
+
+// Vai buscar a ACL existente
+$ACL = Get-Acl F:\Partilha\Pessoais\* 
+// Cria a nova regra para a pasta
+$AccessRule = New-Object System.Security.AccessControl.FileSystemAccessRule("CM-ALVAIAZERE\","Modify", "ContainerInherit,ObjectInherit", "None", "Allow")
+// Adiciona a regra á ACL existente
+$ACL.SetAccessRule($AccessRule)
+// Coloca a ACL atualizada na pasta
+$ACL | Set-Acl -Path F:\Partilha\Pessoais\*
