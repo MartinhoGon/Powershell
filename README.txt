@@ -3,7 +3,6 @@
 $ErrorActionPreference = "Stop"
 
 
-
 ######  Para dar permissões aos utilizadores usar  ###### 
 
 	## Vai buscar a ACL existente
@@ -23,12 +22,17 @@ Get-ADUser -Identity $Nome
 
 
 ######  Permisões  ###### 
+
 FullControl -> Permissão total á pasta (Não dar a ninguem, apenas a administradores da NAS)
 ListDirectory -> Permissão apenas para listar o conteudo da pasta
 Modify -> Permissão para Modificar a pasta e os seus conteudos (adicionar, editar e remover)
 Write -> Permite Criar pastas e ficheiros e modificar os ficheiros existentes
 Read -> Pemrite Listar conteudo, ler dados atributos e permissões
 ReadAndExecute -> Listar conteudo, executar ficheiro, ler ficheiros atributos e permissões
+
+
+Para mais informação:
+https://blog.netwrix.com/2018/04/18/how-to-manage-file-system-acls-with-powershell-scripts/
 
 ######  Formato do JSON  ###### 
 
@@ -56,7 +60,7 @@ ReadAndExecute -> Listar conteudo, executar ficheiro, ler ficheiros atributos e 
                 {
                     "nome": "mjgomes", ## nome do utilizar / grupo
                     "permissao": "Modify", ## referir ao ponto anterior para ver as permissões adequadas
-                    "heranca": "ContainerInherit,ObjectInherit", ## Contaier... -> para dar permissoes a pasta e subpastas; None -> apenas permissão á pasta
+                    "heranca": "[ContainerInherit,ObjectInherit, None]", ## Contaier... -> para dar permissoes a pasta e subpastas; None -> apenas permissão á pasta
                     "tipo": "utilizador" ## pode ser 'grupo' ou  'utilizador' outros tipos serão ignorados
                 }
             ]
