@@ -51,7 +51,7 @@ function MoveFolders {
         [Parameter(Mandatory = $true)] $jsonObject #pastas
     )
     $erro = 0
-    $msgErro = "Ocorreu um erro ao mover as seguintes pastas:"
+    $msgErro = "Ocorreu um erro ao mover as seguintes pastas: "
     Write-Host "A mover pastas..."
     foreach ($pasta in $jsonObject) {
         try {
@@ -70,7 +70,7 @@ function MoveFolders {
         catch {
             Write-Host "Ocorreu um erro ao mover a pasta "+$pasta.name -ForegroundColor Red
             $erro = 1
-            $msgErro += $pasta.name + " ||"
+            $msgErro += $pasta.name + " || "
         }
     }
 
@@ -84,9 +84,9 @@ function MoveFolders {
 
 function AtribuirPermissoes () {
     param(
-        [Parameter(Mandatory = $true)] $jsonObject, #permissoes
-        [String] $FolderPath,
-        [String] $folderName
+        [Parameter(Mandatory = $true)] $jsonObject, # permissoes
+        [String] $FolderPath, # Path para a pasta a dar permissões
+        [String] $folderName # nome da pasta
     )
 
     Write-Host "A atribuir permissoes a pasta: '$folderName'..." -ForegroundColor Yellow
@@ -114,13 +114,15 @@ function TestIfUserOrGroupExists() {
     )
     $existe = False
     try {
-        if($tipo.ToLower() -eq "utilizador"){
+        if ($tipo.ToLower() -eq "utilizador") {
             Get-ADUser -Identity $Nome
             $existe = True
-        }elseif ($tipo.ToLower() -eq "grupo") {
+        }
+        elseif ($tipo.ToLower() -eq "grupo") {
             Get-ADGroup -Identity $Nome
             $existe = True
-        }else{
+        }
+        else {
             Write-Host "Tipo de identidade da permissão nao existe" -ForegroundColor Red
         }
     }
@@ -134,5 +136,9 @@ function TestIfUserOrGroupExists() {
 $json = Get-Content $JSONFile -Encoding utf8 | ConvertFrom-Json
 Write-Host "Pastas a criar: "$json.criar.Count
 Write-Host "Pastas a mover: "$json.mover.Count
-CreateFolders -jsonObject $json.criar
-MoveFolders -jsonObject $json.mover
+if ($json.criar.Count -gt 0) {
+    CreateFolders -jsonObject $json.criar
+}
+if ($json.mover.Count -gt 0) {
+    MoveFolders -jsonObject $json.mover
+}
