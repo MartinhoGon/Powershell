@@ -5,8 +5,10 @@
             "destination": "C:/Teste_Mudança_NAS/Partilha/Serviços/",
             "permissions": [
                 {
-                    "utilizador": "Utilizadores - DDSC",
-                    "permissao": "Modify"
+                    "nome": "Utilizadores - DDSC",
+                    "permissao": "ListDirectory",
+                    "heranca": "ContainerInherit,ObjectInherit",
+                    "tipo": "grupo"
                 }
             ]
         },
@@ -15,18 +17,10 @@
             "destination": "C:/Teste_Mudança_NAS/Partilha/Serviços/",
             "permissions": [
                 {
-                    "utilizador": "Utilizadores - DAF",
-                    "permissao": "Modify"
-                }
-            ]
-        },
-        {
-            "name": "Divisão Administrativa e Financeira",
-            "destination": "C:/Teste_Mudança_NAS/Partilha/Serviços/",
-            "permissions": [
-                {
-                    "utilizador": "Utilizadores - DAF",
-                    "permissao": "Modify"
+                    "nome": "Utilizadores - DAF",
+                    "permissao": "ListDirectory",
+                    "heranca": "ContainerInherit,ObjectInherit",
+                    "tipo": "grupo"
                 }
             ]
         }
@@ -38,8 +32,10 @@
             "destination": "C:/Teste_Mudança_NAS/Partilha/Serviços/Desenvolvimento Social e Educação/",
             "permissions": [
                 {
-                    "utilizador": "Utilizadores - DDSC",
-                    "permissao": "Modify"
+                    "nome": "Utilizadores - DDSC",
+                    "permissao": "Modify",
+                    "heranca": "ContainerInherit,ObjectInherit",
+                    "tipo": "grupo"
                 }
             ]
         },
@@ -49,12 +45,16 @@
             "destination": "C:/Teste_Mudança_NAS/Partilha/Pessoais/",
             "permissions": [
                 {
-                    "utilizador": "carlos.velo",
-                    "permissao": "Modify"
+                    "nome": "carlos.velo",
+                    "permissao": "Modify",
+                    "heranca": "ContainerInherit,ObjectInherit",
+                    "tipo": "utilizador"
                 },
                 {
-                    "utilizador": "martinho.goncalves",
-                    "permissao": "Modify"
+                    "nome": "martinho.goncalves",
+                    "permissao": "Modify",
+                    "heranca": "ContainerInherit,ObjectInherit",
+                    "tipo": "utilizador"
                 }
             ]
         },
@@ -64,8 +64,16 @@
             "destination": "C:/Teste_Mudança_NAS/Partilha/Serviços/Divisão Administrativa e Financeira/",
             "permissions": [
                 {
-                    "utilizador": "Utilizadores - DAF",
-                    "permissao": "Modify"
+                    "nome": "Utilizadores - DAF",
+                    "permissao": "Modify",
+                    "heranca": "ContainerInherit,ObjectInherit",
+                    "tipo": "grupo"
+                },
+                {
+                    "nome": "Utilizadores - DAFs",
+                    "permissao": "Modify",
+                    "heranca": "ContainerInherit,ObjectInherit",
+                    "tipo": "grupo"
                 }
             ]
         },
@@ -75,8 +83,10 @@
             "destination": "C:/Teste_Mudança_NAS/Partilha/Serviços/Divisão Administrativa e Financeira/",
             "permissions": [
                 {
-                    "utilizador": "Utilizadores - DAF",
-                    "permissao": "Modify"
+                    "nome": "Utilizadores - DAF",
+                    "permissao": "Modify",
+                    "heranca": "ContainerInherit,ObjectInherit",
+                    "tipo": "grupo"
                 }
             ]
         },
@@ -86,8 +96,10 @@
             "destination": "C:/Teste_Mudança_NAS/Partilha/Serviços/Desenvolvimento Social e Educação/",
             "permissions": [
                 {
-                    "utilizador": "Utilizadores - Educação",
-                    "permissao": "Modify"
+                    "nome": "Utilizadores - Educação",
+                    "permissao": "Modify",
+                    "heranca": "ContainerInherit,ObjectInherit",
+                    "tipo": "grupo"
                 }
             ]
         },
@@ -97,8 +109,16 @@
             "destination": "C:/Teste_Mudança_NAS/Partilha/Pessoais/",
             "permissions": [
                 {
-                    "utilizador": "joao.silva",
-                    "permissao": "Modify"
+                    "nome": "joao.silva",
+                    "permissao": "Modify",
+                    "heranca": "ContainerInherit,ObjectInherit",
+                    "tipo": "utilizador"
+                },
+                {
+                    "nome": "ze.manel",
+                    "permissao": "Modify",
+                    "heranca": "ContainerInherit,ObjectInherit",
+                    "tipo": "utilizador"
                 }
             ]
         },
@@ -108,8 +128,10 @@
             "destination": "C:/Teste_Mudança_NAS/Partilha/Pessoais/",
             "permissions": [
                 {
-                    "utilizador": "martinho.goncalves",
-                    "permissao": "Modify"
+                    "nome": "martinho.goncalves",
+                    "permissao": "Modify",
+                    "heranca": "ContainerInherit,ObjectInherit",
+                    "tipo": "utilizador"
                 }
             ]
         },
@@ -119,8 +141,23 @@
             "destination": "C:/Teste_Mudança_NAS/Partilha/Pessoais/",
             "permissions": [
                 {
-                    "utilizador": "turismo",
-                    "permissao": "Modify"
+                    "nome": "turismo",
+                    "permissao": "Modify",
+                    "heranca": "ContainerInherit,ObjectInherit",
+                    "tipo": "utilizador"
+                }
+            ]
+        },
+        {
+            "name": "Inexistente",
+            "path": "C:/Teste_Mudança_NAS/Partilhados/Inexistente",
+            "destination": "C:/Teste_Mudança_NAS/Partilha/Pessoais/",
+            "permissions": [
+                {
+                    "nome": "inexistente",
+                    "permissao": "Modify",
+                    "heranca": "ContainerInherit,ObjectInherit",
+                    "tipo": "utilizador"
                 }
             ]
         }

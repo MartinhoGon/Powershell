@@ -55,16 +55,22 @@ function MoveFolders {
     Write-Host "A mover pastas..."
     foreach ($pasta in $jsonObject) {
         try {
-            Write-Host "A mover a pasta: $folderName"
-            Move-Item -Path $pasta.path -Destination $pasta.destination -ErrorAction Stop
-            Write-Host "Pasta movida com sucesso!!" -ForegroundColor Green 
-            $newFolder = $pasta.destination+$pasta.name
-            AtribuirPermissoes -jsonObject $pasta.permissions -FolderPath $newFolder -folderName $pasta.name
+            if (Test-Path -Path $pasta.path) {
+                Write-Host "A mover a pasta: "$pasta.name
+                Move-Item -Path $pasta.path -Destination $pasta.destination -ErrorAction Stop
+                Write-Host "Pasta movida com sucesso!!" -ForegroundColor Green 
+                $newFolder = $pasta.destination + $pasta.name
+                AtribuirPermissoes -jsonObject $pasta.permissions -FolderPath $newFolder -folderName $pasta.name
+            }
+            else {
+                $erro = 1
+                $msgErro += $pasta.name + " nao existe ||"
+            }
         }
         catch {
             Write-Host "Ocorreu um erro ao mover a pasta "+$pasta.name -ForegroundColor Red
             $erro = 1
-            $msgErro += " $folderName ||"
+            $msgErro += $pasta.name + " ||"
         }
     }
 
@@ -82,15 +88,16 @@ function AtribuirPermissoes () {
         [String] $FolderPath,
         [String] $folderName
     )
-    # $erro = 0
-    # $msgErro = "Ocorreu um erro ao atribuir permissoes as seguintes pastas:"
-    Write-Host "A atribuir permissoes a pasta $folderName...."
+
+    Write-Host "A atribuir permissoes a pasta: '$folderName'..." -ForegroundColor Yellow
     try {
         $ACL = Get-Acl $FolderPath
         foreach ($permissao in $jsonObject) {
-            write-host $permissao.utilizador " - " $permissao.permissao
-            $AccessRule = New-Object System.Security.AccessControl.FileSystemAccessRule($permissao.utilizador, $permissao.permissao, "ContainerInherit,ObjectInherit", "None", "Allow")
-            $ACL.SetAccessRule($AccessRule)
+            if (TestIfUserOrGroupExists -Nome $permissao.nome -Tipo $permissao.tipo) {
+                write-host $permissao.nome " - " $permissao.permissao
+                $AccessRule = New-Object System.Security.AccessControl.FileSystemAccessRule($permissao.nome, $permissao.permissao, $permissao.heranca, "None", "Allow")
+                $ACL.SetAccessRule($AccessRule)
+            }
         }
         $ACL | Set-Acl -Path $FolderPath #-ErrorAction Stop
     }
@@ -98,6 +105,30 @@ function AtribuirPermissoes () {
         Write-Host "Ocorreu um erro ao atribuir permissoes a pasta: $folderName" -ForegroundColor Red
     }
 
+}
+
+function TestIfUserOrGroupExists() {
+    param(
+        [Parameter(Mandatory = $true)] $Nome, #nome grupo ou utilizador
+        [Parameter(Mandatory = $true)] $Tipo #se é grupo ou utilizador
+    )
+    $existe = False
+    try {
+        if($tipo.ToLower() -eq "utilizador"){
+            Get-ADUser -Identity $Nome
+            $existe = True
+        }elseif ($tipo.ToLower() -eq "grupo") {
+            Get-ADGroup -Identity $Nome
+            $existe = True
+        }else{
+            Write-Host "Tipo de identidade da permissão nao existe" -ForegroundColor Red
+        }
+    }
+    catch {
+        Write-Host "Utilizador/Grupo '"$nome"' nao existe." -ForegroundColor Red
+        $existe = False
+    }
+    return $existe
 }
 
 $json = Get-Content $JSONFile -Encoding utf8 | ConvertFrom-Json
