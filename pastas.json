@@ -5,7 +5,7 @@
             "destination": "C:/Teste_Mudança_NAS/Partilha/Serviços/",
             "permissions": [
                 {
-                    "utilizador": "Utilizadores - DDCS",
+                    "utilizador": "Utilizadores - DDSC",
                     "permissao": "Modify"
                 }
             ]
@@ -19,7 +19,8 @@
                     "permissao": "Modify"
                 }
             ]
-        },{
+        },
+        {
             "name": "Divisão Administrativa e Financeira",
             "destination": "C:/Teste_Mudança_NAS/Partilha/Serviços/",
             "permissions": [
@@ -32,28 +33,35 @@
     ],
     "mover": [
         {
+            "name": "Ação Social",
             "path": "C:/Teste_Mudança_NAS/Partilhados/Ação Social",
-            "destination": "C:/Teste_Mudança_NAS/Partilha/Serviços/Desenvolvimento Social e Educação",
+            "destination": "C:/Teste_Mudança_NAS/Partilha/Serviços/Desenvolvimento Social e Educação/",
             "permissions": [
                 {
-                    "utilizador": "Utilizadores - ABC",
+                    "utilizador": "Utilizadores - DDSC",
                     "permissao": "Modify"
                 }
             ]
         },
         {
+            "name": "carlos.velo",
             "path": "C:/Teste_Mudança_NAS/Partilhados/carlos.velo",
             "destination": "C:/Teste_Mudança_NAS/Partilha/Pessoais/",
             "permissions": [
                 {
                     "utilizador": "carlos.velo",
                     "permissao": "Modify"
+                },
+                {
+                    "utilizador": "martinho.goncalves",
+                    "permissao": "Modify"
                 }
             ]
         },
         {
+            "name": "Divisão Administrativa",
             "path": "C:/Teste_Mudança_NAS/Partilhados/Divisão Administrativa",
-            "destination": "C:/Teste_Mudança_NAS/Partilha/Serviços/Divisão Administrativa e Financeira",
+            "destination": "C:/Teste_Mudança_NAS/Partilha/Serviços/Divisão Administrativa e Financeira/",
             "permissions": [
                 {
                     "utilizador": "Utilizadores - DAF",
@@ -62,8 +70,9 @@
             ]
         },
         {
+            "name": "Divisão Financeira",
             "path": "C:/Teste_Mudança_NAS/Partilhados/Divisão Financeira",
-            "destination": "C:/Teste_Mudança_NAS/Partilha/Serviços/Divisão Administrativa e Financeira",
+            "destination": "C:/Teste_Mudança_NAS/Partilha/Serviços/Divisão Administrativa e Financeira/",
             "permissions": [
                 {
                     "utilizador": "Utilizadores - DAF",
@@ -72,16 +81,18 @@
             ]
         },
         {
+            "name": "Educação",
             "path": "C:/Teste_Mudança_NAS/Partilhados/Educação",
-            "destination": "C:/Teste_Mudança_NAS/Partilha/Serviços/Desenvolvimento Social e Educação",
+            "destination": "C:/Teste_Mudança_NAS/Partilha/Serviços/Desenvolvimento Social e Educação/",
             "permissions": [
                 {
-                    "utilizador": "Utilizadores - ABC",
+                    "utilizador": "Utilizadores - Educação",
                     "permissao": "Modify"
                 }
             ]
         },
         {
+            "name": "joao.silva",
             "path": "C:/Teste_Mudança_NAS/Partilhados/joao.silva",
             "destination": "C:/Teste_Mudança_NAS/Partilha/Pessoais/",
             "permissions": [
@@ -92,6 +103,7 @@
             ]
         },
         {
+            "name": "martinho.goncalves",
             "path": "C:/Teste_Mudança_NAS/Partilhados/martinho.goncalves",
             "destination": "C:/Teste_Mudança_NAS/Partilha/Pessoais/",
             "permissions": [
@@ -102,6 +114,7 @@
             ]
         },
         {
+            "name": "turismo",
             "path": "C:/Teste_Mudança_NAS/Partilhados/turismo",
             "destination": "C:/Teste_Mudança_NAS/Partilha/Pessoais/",
             "permissions": [
