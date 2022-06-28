@@ -4,53 +4,60 @@ $ErrorActionPreference = "Stop"
 
 
 
-##
-Para dar permissões aos utilizadores usar:
+######  Para dar permissões aos utilizadores usar  ###### 
 
-// Vai buscar a ACL existente
-$ACL = Get-Acl F:\Partilha\Pessoais\* 
-// Cria a nova regra para a pasta
-$AccessRule = New-Object System.Security.AccessControl.FileSystemAccessRule("CM-ALVAIAZERE\","Modify", "ContainerInherit,ObjectInherit", "None", "Allow")
-// Adiciona a regra á ACL existente
-$ACL.SetAccessRule($AccessRule)
-// Coloca a ACL atualizada na pasta
-$ACL | Set-Acl -Path F:\Partilha\Pessoais\*
+	## Vai buscar a ACL existente
+	$ACL = Get-Acl F:\Partilha\Pessoais\* 
+	## Cria a nova regra para a pasta
+	$AccessRule = New-Object System.Security.AccessControl.FileSystemAccessRule("CM-ALVAIAZERE\","Modify", "ContainerInherit,ObjectInherit", "None", "Allow")
+	## Adiciona a regra á ACL existente
+	$ACL.SetAccessRule($AccessRule)
+	## Coloca a ACL atualizada na pasta
+	$ACL | Set-Acl -Path F:\Partilha\Pessoais\*
 
 
-///////  Verificar a Existencia do Grupo ou Utilizador
+######  Verificar a Existencia do Grupo ou Utilizador ###### 
+
 Get-ADGroup -Identity $Nome
 Get-ADUser -Identity $Nome
 
 
-///////////////////////
-Formato do JSON:
+######  Permisões  ###### 
+FullControl -> Permissão total á pasta (Não dar a ninguem, apenas a administradores da NAS)
+ListDirectory -> Permissão apenas para listar o conteudo da pasta
+Modify -> Permissão para Modificar a pasta e os seus conteudos (adicionar, editar e remover)
+Write -> Permite Criar pastas e ficheiros e modificar os ficheiros existentes
+Read -> Pemrite Listar conteudo, ler dados atributos e permissões
+ReadAndExecute -> Listar conteudo, executar ficheiro, ler ficheiros atributos e permissões
+
+######  Formato do JSON  ###### 
 
 {
     "criar": [
         {
-            "name": "Teste",
-            "destination": "C:/",
+            "name": "Teste", ## nome da pasta
+            "destination": "C:/", ## caminho destino da pasta
             "permissions": [
                 {
-                    "nome": "Users - Sales",
-                    "permissao": "ListDirectory",
-                    "heranca": "ContainerInherit,ObjectInherit",
-                    "tipo": "grupo"
+                    "nome": "Users - Sales", ## nome do utilizar / grupo
+                    "permissao": "ListDirectory", ## referir ao ponto anterior para ver as permissões adequadas
+                    "heranca": "[ContainerInherit,ObjectInherit, None]", ## Contaier... -> para dar permissoes a pasta e subpastas; None -> apenas permissão á pasta
+                    "tipo": "grupo"  ## pode ser 'grupo' ou  'utilizador' outros tipos serão ignorados
                 }
             ]
         }
     ],
     "mover": [
         {
-            "name": "ABC",
-            "path": "C:/ABC",
-            "destination": "F:/Teste/",
+            "name": "ABC", ## nome da pasta
+            "path": "C:/ABC", ## caminho para a pasta
+            "destination": "F:/Teste/", ## caminho destino da pasta
             "permissions": [
                 {
-                    "nome": "mjgomes",
-                    "permissao": "Modify",
-                    "heranca": "ContainerInherit,ObjectInherit",
-                    "tipo": "utilizador"
+                    "nome": "mjgomes", ## nome do utilizar / grupo
+                    "permissao": "Modify", ## referir ao ponto anterior para ver as permissões adequadas
+                    "heranca": "ContainerInherit,ObjectInherit", ## Contaier... -> para dar permissoes a pasta e subpastas; None -> apenas permissão á pasta
+                    "tipo": "utilizador" ## pode ser 'grupo' ou  'utilizador' outros tipos serão ignorados
                 }
             ]
         }
