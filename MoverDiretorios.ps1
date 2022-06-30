@@ -88,21 +88,24 @@ function AtribuirPermissoes () {
         [String] $FolderPath, # Path para a pasta a dar permissões
         [String] $folderName # nome da pasta
     )
-
-    Write-Host "A atribuir permissoes a pasta: '$folderName'..." -ForegroundColor Yellow
-    try {
-        $ACL = Get-Acl $FolderPath
-        foreach ($permissao in $jsonObject) {
-            if (TestIfUserOrGroupExists -Nome $permissao.nome -Tipo $permissao.tipo) {
-                write-host $permissao.nome " - " $permissao.permissao
-                $AccessRule = New-Object System.Security.AccessControl.FileSystemAccessRule($permissao.nome, $permissao.permissao, $permissao.heranca, "None", "Allow")
-                $ACL.SetAccessRule($AccessRule)
+    if($jsonObject.Count -gt 0){
+        Write-Host "A atribuir permissoes a pasta: '$folderName'..." -ForegroundColor Yellow
+        try {
+            $ACL = Get-Acl $FolderPath
+            foreach ($permissao in $jsonObject) {
+                if (TestIfUserOrGroupExists -Nome $permissao.nome -Tipo $permissao.tipo) {
+                    write-host $permissao.nome " - " $permissao.permissao
+                    $AccessRule = New-Object System.Security.AccessControl.FileSystemAccessRule($permissao.nome, $permissao.permissao, $permissao.heranca, "None", "Allow")
+                    $ACL.SetAccessRule($AccessRule)
+                }
             }
+            $ACL | Set-Acl -Path $FolderPath #-ErrorAction Stop
         }
-        $ACL | Set-Acl -Path $FolderPath #-ErrorAction Stop
-    }
-    catch {
-        Write-Host "Ocorreu um erro ao atribuir permissoes a pasta: $folderName" -ForegroundColor Red
+        catch {
+            Write-Host "Ocorreu um erro ao atribuir permissoes a pasta: $folderName" -ForegroundColor Red
+        }
+    }else{
+        Write-Host "Não existem permissoes a serem atribuidas!" -ForegroundColor Yellow
     }
 
 }

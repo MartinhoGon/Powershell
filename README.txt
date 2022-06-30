@@ -17,22 +17,27 @@ $ErrorActionPreference = "Stop"
 
 ######  Verificar a Existencia do Grupo ou Utilizador ###### 
 
-Get-ADGroup -Identity $Nome
-Get-ADUser -Identity $Nome
+	Get-ADGroup -Identity $Nome
+	Get-ADUser -Identity $Nome
 
 
 ######  Permisões  ###### 
 
-FullControl -> Permissão total á pasta (Não dar a ninguem, apenas a administradores da NAS)
-ListDirectory -> Permissão apenas para listar o conteudo da pasta
-Modify -> Permissão para Modificar a pasta e os seus conteudos (adicionar, editar e remover)
-Write -> Permite Criar pastas e ficheiros e modificar os ficheiros existentes
-Read -> Pemrite Listar conteudo, ler dados atributos e permissões
-ReadAndExecute -> Listar conteudo, executar ficheiro, ler ficheiros atributos e permissões
+	FullControl -> Permissão total á pasta (Não dar a ninguem, apenas a administradores da NAS)
+	ListDirectory -> Permissão apenas para listar o conteudo da pasta
+	Modify -> Permissão para Modificar a pasta e os seus conteudos (adicionar, editar e remover)
+	Write -> Permite Criar pastas e ficheiros e modificar os ficheiros existentes
+	Read -> Pemrite Listar conteudo, ler dados atributos e permissões
+	ReadAndExecute -> Listar conteudo, executar ficheiro, ler ficheiros atributos e permissões
 
 
-Para mais informação:
-https://blog.netwrix.com/2018/04/18/how-to-manage-file-system-acls-with-powershell-scripts/
+	Para mais informação:
+	https://blog.netwrix.com/2018/04/18/how-to-manage-file-system-acls-with-powershell-scripts/
+
+	
+	A permissão "Read" quando usada em conjunto com o "None" na herança apenas dá permissão de listagem de pastas as quais o utilizador tem permissão,
+	todas as outras ficam inivisiveis
+
 
 ######  Formato do JSON  ###### 
 

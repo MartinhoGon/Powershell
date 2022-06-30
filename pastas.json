@@ -6,8 +6,8 @@
             "permissions": [
                 {
                     "nome": "Utilizadores - DDSC",
-                    "permissao": "ListDirectory",
-                    "heranca": "ContainerInherit,ObjectInherit",
+                    "permissao": "Read",
+                    "heranca": "None",
                     "tipo": "grupo"
                 }
             ]
