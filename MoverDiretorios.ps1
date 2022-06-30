@@ -136,12 +136,25 @@ function TestIfUserOrGroupExists() {
     return $existe
 }
 
-$json = Get-Content $JSONFile -Encoding utf8 | ConvertFrom-Json
-Write-Host "Pastas a criar: "$json.criar.Count
-Write-Host "Pastas a mover: "$json.mover.Count
-if ($json.criar.Count -gt 0) {
-    CreateFolders -jsonObject $json.criar
+#- Main -#
+try {
+    $json = Get-Content $JSONFile -Encoding utf8 | ConvertFrom-Json
+    Write-Host "Pastas a criar: "$json.criar.Count
+    Write-Host "Pastas a mover: "$json.mover.Count
+    $continuar = Read-Host "Tem a certeza que pretende continuar? (s/n)"
+    
+    if($continuar.ToLower() -eq 's' ){
+        if ($json.criar.Count -gt 0) {
+            CreateFolders -jsonObject $json.criar
+        }
+        if ($json.mover.Count -gt 0) {
+            MoveFolders -jsonObject $json.mover
+        }
+    }else{
+        Write-Host "Fujam!! A abortar missao!" -ForegroundColor Red
+    }
 }
-if ($json.mover.Count -gt 0) {
-    MoveFolders -jsonObject $json.mover
+catch {
+    Write-Host "Ocorreu um erro ao ler o ficheiro. Verifique que o JSON esta em conformidade com as regras." -ForegroundColor Red
 }
+
