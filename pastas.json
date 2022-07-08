@@ -23,6 +23,18 @@
                     "tipo": "grupo"
                 }
             ]
+        },
+        {
+            "name": "Divisão Administrativa e Financeira",
+            "destination": "C:/Teste_Mudança_NAS/Partilha/Serviçs/",
+            "permissions": [
+                {
+                    "nome": "Utilizadores - DAF",
+                    "permissao": "ListDirectory",
+                    "heranca": "ContainerInherit,ObjectInherit",
+                    "tipo": "grupo"
+                }
+            ]
         }
     ],
     "mover": [

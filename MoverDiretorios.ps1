@@ -18,6 +18,9 @@ function CreateFolders () {
     Write-Host "A criar pastas..."
     $erro = 0
     $msgErro = "Ocorreu um erro ao mover as seguintes pastas:"
+    #Criar lista para adicionar ao novo JSON no caso de dar erro
+    $list = New-Object System.Collections.ArrayList
+
     foreach ($pasta in $jsonObject) {
         $newFolder = $pasta.destination + $pasta.name
         $folderName = $pasta.name
@@ -36,6 +39,8 @@ function CreateFolders () {
             $erro = 1
             Write-Host "Ocorreu um erro ao criar a pasta: $folderName" -ForegroundColor Red
             $msgErro += " $folderName ||"
+            #Adicionar objeto a lista caso haja um erro a criar para depois criar um novo ficheiro
+            $list.Add($pasta)
         }
     }
     if ($erro -eq 0) {
@@ -43,6 +48,8 @@ function CreateFolders () {
     }
     else {
         Write-Host $msgErro -ForegroundColor Red
+        #Adicionar ao JSON final
+        $newJson.Add('criar', $list)
     }
 }
 
@@ -53,6 +60,10 @@ function MoveFolders {
     $erro = 0
     $msgErro = "Ocorreu um erro ao mover as seguintes pastas: "
     Write-Host "A mover pastas..."
+
+    #Criar lista para adicionar ao novo JSON no caso de dar erro
+    $list = New-Object System.Collections.ArrayList
+
     foreach ($pasta in $jsonObject) {
         try {
             if (Test-Path -Path $pasta.path) {
@@ -71,6 +82,8 @@ function MoveFolders {
             Write-Host "Ocorreu um erro ao mover a pasta "+$pasta.name -ForegroundColor Red
             $erro = 1
             $msgErro += $pasta.name + " || "
+            #Adicionar objeto a lista caso haja um erro a mover para depois criar um novo ficheiro
+            $list.Add($pasta)
         }
     }
 
@@ -79,6 +92,8 @@ function MoveFolders {
     }
     else {
         Write-Host $msgErro -ForegroundColor Red
+        #Adicionar ao JSON final
+        $newJson.Add('mover', $list)
     }
 }
 
@@ -110,6 +125,13 @@ function AtribuirPermissoes () {
 
 }
 
+# function CreateNewObject() {
+#     param(
+#         [Parameter(Mandatory = $true)] $objetoInserir, 
+#         [Parameter(Mandatory = $true)] $tipo  ## Se é criar ou mover
+#     )
+# }
+
 function TestIfUserOrGroupExists() {
     param(
         [Parameter(Mandatory = $true)] $Nome, #nome grupo ou utilizador
@@ -139,6 +161,9 @@ function TestIfUserOrGroupExists() {
 #- Main -#
 try {
     $json = Get-Content $JSONFile -Encoding utf8 | ConvertFrom-Json
+    #$newJson = @{} 
+    #$list = New-Object System.Collections.ArrayList
+
     Write-Host "Pastas a criar: "$json.criar.Count
     Write-Host "Pastas a mover: "$json.mover.Count
     $continuar = Read-Host "Tem a certeza que pretende continuar? (s/n)"
