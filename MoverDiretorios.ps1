@@ -36,11 +36,12 @@ function CreateFolders () {
             }
         }
         catch {
+            #Adicionar objeto a lista caso haja um erro a criar para depois criar um novo ficheiro
+            $list.Add($pasta)
+
             $erro = 1
             Write-Host "Ocorreu um erro ao criar a pasta: $folderName" -ForegroundColor Red
             $msgErro += " $folderName ||"
-            #Adicionar objeto a lista caso haja um erro a criar para depois criar um novo ficheiro
-            $list.Add($pasta)
         }
     }
     if ($erro -eq 0) {
@@ -79,11 +80,12 @@ function MoveFolders {
             }
         }
         catch {
-            Write-Host "Ocorreu um erro ao mover a pasta "+$pasta.name -ForegroundColor Red
-            $erro = 1
-            $msgErro += $pasta.name + " || "
             #Adicionar objeto a lista caso haja um erro a mover para depois criar um novo ficheiro
             $list.Add($pasta)
+
+            Write-Host "Ocorreu um erro ao mover a pasta " $pasta.name -ForegroundColor Red
+            $erro = 1
+            $msgErro += $pasta.name + " || "; 
         }
     }
 
@@ -161,7 +163,7 @@ function TestIfUserOrGroupExists() {
 #- Main -#
 try {
     $json = Get-Content $JSONFile -Encoding utf8 | ConvertFrom-Json
-    #$newJson = @{} 
+    $newJson = @{} 
     #$list = New-Object System.Collections.ArrayList
 
     Write-Host "Pastas a criar: "$json.criar.Count
@@ -175,6 +177,8 @@ try {
         if ($json.mover.Count -gt 0) {
             MoveFolders -jsonObject $json.mover
         }
+        $pastaName = Get-Date -Format "MM-dd-yyyy_HHmmss"
+        $newJson | ConvertTo-Json -Depth 10 | Out-File ".\Pastas_$pastaName.json"
     }else{
         Write-Host "Fujam!! A abortar missao!" -ForegroundColor Red
     }
