@@ -27,6 +27,7 @@ function CreateFolders () {
         try {
             if (Test-Path -Path $newFolder) {
                 Write-Host "A pasta $folderName ja existe!" -ForegroundColor Yellow
+                $list.Add($pasta)
             }
             else {
                 New-Item -Path $pasta.destination -Name $pasta.name -ItemType "directory" -ErrorAction Stop | Out-Null
@@ -77,6 +78,7 @@ function MoveFolders {
             else {
                 $erro = 1
                 $msgErro += $pasta.name + " nao existe ||"
+                $list.Add($pasta)
             }
         }
         catch {
@@ -105,7 +107,7 @@ function AtribuirPermissoes () {
         [String] $FolderPath, # Path para a pasta a dar permissões
         [String] $folderName # nome da pasta
     )
-    if($jsonObject.Count -gt 0){
+    if ($jsonObject.Count -gt 0) {
         Write-Host "A atribuir permissoes a pasta: '$folderName'..." -ForegroundColor Yellow
         try {
             $ACL = Get-Acl $FolderPath
@@ -121,7 +123,8 @@ function AtribuirPermissoes () {
         catch {
             Write-Host "Ocorreu um erro ao atribuir permissoes a pasta: $folderName" -ForegroundColor Red
         }
-    }else{
+    }
+    else {
         Write-Host "Não existem permissoes a serem atribuidas!" -ForegroundColor Yellow
     }
 
@@ -170,7 +173,7 @@ try {
     Write-Host "Pastas a mover: "$json.mover.Count
     $continuar = Read-Host "Tem a certeza que pretende continuar? (s/n)"
     
-    if($continuar.ToLower() -eq 's' ){
+    if ($continuar.ToLower() -eq 's' ) {
         if ($json.criar.Count -gt 0) {
             CreateFolders -jsonObject $json.criar
         }
@@ -179,7 +182,8 @@ try {
         }
         $pastaName = Get-Date -Format "MM-dd-yyyy_HHmmss"
         $newJson | ConvertTo-Json -Depth 10 | Out-File ".\Pastas_$pastaName.json"
-    }else{
+    }
+    else {
         Write-Host "Fujam!! A abortar missao!" -ForegroundColor Red
     }
 }
