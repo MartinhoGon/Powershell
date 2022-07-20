@@ -31,6 +31,7 @@ function RemoverPerissoes() {
             ## Remover as permissões das pastas filhos
             $folders = Get-ChildItem -Directory -Path $folder.path -Recurse
 
+            ## Percorre as pastas filho e remove as ACLs para cada uma delas 
             foreach ($folder in $folders) {
                 # $permissoesFilho = Get-ChildItem -Path $folder.FullName -Recurse | Get-ACL  | ForEach-Object { $_.Access }
                 $permissoesFilho = get-acl $folder.FullName | ForEach-Object { $_.Access }
@@ -41,7 +42,6 @@ function RemoverPerissoes() {
                 foreach ($acl in $permissoesFilho) {
                     Write-Host $acl.IdentityReference "-" $acl.FileSystemRights "-" $acl.AccessControlType
                     $AccessRule = New-Object System.Security.AccessControl.FileSystemAccessRule($acl.IdentityReference, $acl.FileSystemRights, $acl.InheritanceFlags, $acl.PropagationFlags, $acl.AccessControlType)
-                    # write-host $AccessRule
                     $ACLPasta.RemoveAccessRule($AccessRule)
                 }
                 $ACLPasta | Set-Acl $folder.FullName
@@ -49,12 +49,7 @@ function RemoverPerissoes() {
 
         }
         catch {
-            #Adicionar objeto a lista caso haja um erro a mover para depois criar um novo ficheiro
-            $list.Add($pasta)
-
-            Write-Host "Ocorreu um erro ao mover a pasta " $pasta.name -ForegroundColor Red
-            $erro = 1
-            $msgErro += $pasta.name + " || "; 
+            Write-Host "Ocorreu um erro ao reover as permissoes da pasta: " $pasta.name -ForegroundColor Red
         }
     }
 
