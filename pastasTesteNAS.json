@@ -1,0 +1,198 @@
+{
+    "criar": [
+        {
+            "name": "Divisão Administrativa e Financeira",
+            "destination": "C:/Partilha/Serviços/",
+            "permissions": [
+                {
+                    "nome": "Utilizadores - DAF",
+                    "permissao": "Read",
+                    "heranca": "None",
+                    "tipo": "grupo"
+                },
+                {
+                    "nome": "celia.ferreira",
+                    "permissao": "Modify",
+                    "heranca": "ContainerInherit,ObjectInherit",
+                    "tipo": "utilizador"
+                },
+                {
+                    "nome": "celia.ferreiraaaa",
+                    "permissao": "Modify",
+                    "heranca": "ContainerInherit,ObjectInherit",
+                    "tipo": "utilizador"
+                }
+            ]
+        },
+        {
+            "name": "Desenvolvimento Social e Cultural",
+            "destination": "C:/Partilha/Serviços/",
+            "permissions": [
+                {
+                    "nome": "Utilizadores - DDSC",
+                    "permissao": "Read",
+                    "heranca": "None",
+                    "tipo": "grupo"
+                }
+            ]
+        },
+        {
+            "name": "Divisão de Obras",
+            "destination": "C:/Partilha/Serviços/",
+            "permissions": [
+                {
+                    "nome": "Utilizadores - DOMU",
+                    "permissao": "Read",
+                    "heranca": "None",
+                    "tipo": "grupo"
+                },
+                {
+                    "nome": "joseluis.carvalho",
+                    "permissao": "Modify",
+                    "heranca": "ContainerInherit,ObjectInherit",
+                    "tipo": "utilizador"
+                }
+            ]
+        },
+        {
+            "name": "Contratação Pública, Acessoria e Fiscalização",
+            "destination": "C:/Partilha/Serviços/",
+            "permissions": [
+                {
+                    "nome": "Utilizadores - GCPAF",
+                    "permissao": "Read",
+                    "heranca": "None",
+                    "tipo": "grupo"
+                }
+            ]
+        },
+        {
+            "name": "Planeamento Estratégico",
+            "destination": "C:/Partilha/Serviços/",
+            "permissions": [
+                {
+                    "nome": "Utilizadores - GPE",
+                    "permissao": "Read",
+                    "heranca": "None",
+                    "tipo": "grupo"
+                }
+            ]
+        },
+        {
+            "name": "Desporto, Juventude e Associativismo",
+            "destination": "C:/Partilha/Serviços/",
+            "permissions": [
+                {
+                    "nome": "Utilizadores - UDJA",
+                    "permissao": "Read",
+                    "heranca": "None",
+                    "tipo": "grupo"
+                },
+				{
+                    "nome": "Utilizadores - UDJAaaa",
+                    "permissao": "Read",
+                    "heranca": "None",
+                    "tipo": "grupo"
+                }
+            ]
+        }
+    ],
+    "mover": [
+        {
+            "name": "carlos.godinho",
+            "path": "C:/Partilhados/carlos.godinho",
+            "destination": "C:/Partilha/Pessoais/",
+            "permissions": [
+                {
+                    "nome": "carlos.godinho",
+                    "permissao": "Modify",
+                    "heranca": "ContainerInherit,ObjectInherit",
+                    "tipo": "utilizador"
+                }
+            ]
+        },
+        {
+            "name": "Casa da Cultura",
+            "path": "C:/Partilhados/Casa da Cultura",
+            "destination": "C:/Partilha/Serviços/Desenvolvimento Social e Cultural/",
+            "permissions": [
+                {
+                    "nome": "Casa da Cultura - Leitura",
+                    "permissao": "Read",
+                    "heranca": "ContainerInherit,ObjectInherit",
+                    "tipo": "grupo"
+                },
+                {
+                    "nome": "Casa da Cultura - Escrita",
+                    "permissao": "Modify",
+                    "heranca": "ContainerInherit,ObjectInherit",
+                    "tipo": "grupo"
+                }
+            ]
+        },
+        {
+            "name": "Divisão Administrativa",
+            "path": "C:/Partilhados/Divisão Administrativa",
+            "destination": "C:/Partilha/Serviços/Divisão Administrativa e Financeira/",
+            "permissions": [
+                {
+                    "nome": "Utilizadores - Urbanismo Edificação e AA",
+                    "permissao": "Modify",
+                    "heranca": "ContainerInherit,ObjectInherit",
+                    "tipo": "grupo"
+                },
+                {
+                    "nome": "Utilizadores - GPE",
+                    "permissao": "Read",
+                    "heranca": "ContainerInherit,ObjectInherit",
+                    "tipo": "grupo"
+                }
+            ]
+        },
+        {
+            "name": "filipa.barros",
+            "path": "C:/Partilhados/filipa.barros",
+            "destination": "C:/Partilha/Pessoais/",
+            "permissions": [
+                {
+                    "nome": "filipa.barros",
+                    "permissao": "Modify",
+                    "heranca": "ContainerInherit,ObjectInherit",
+                    "tipo": "utilizador"
+                }
+            ]
+        },
+        {
+            "name": "GES",
+            "path": "C:/Partilhados/GES",
+            "destination": "C:/Partilha/AIRC/",
+            "permissions": [
+                {
+                    "nome": "AIRC - GES",
+                    "permissao": "Modify",
+                    "heranca": "ContainerInherit,ObjectInherit",
+                    "tipo": "grupo"
+                }
+            ]
+        },
+        {
+            "name": "IC3",
+            "path": "C:/Partilhados/IC3",
+            "destination": "C:/Partilha/Serviços/Divisão de Obras/",
+            "permissions": [
+                {
+                    "nome": "IC3 - Leitura",
+                    "permissao": "Read",
+                    "heranca": "ContainerInherit,ObjectInherit",
+                    "tipo": "grupo"
+                },
+                {
+                    "nome": "IC3 - Escrita",
+                    "permissao": "Modify",
+                    "heranca": "ContainerInherit,ObjectInherit",
+                    "tipo": "grupo"
+                }
+            ]
+        }
+    ]
+}

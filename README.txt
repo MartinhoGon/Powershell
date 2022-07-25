@@ -39,6 +39,16 @@ $ErrorActionPreference = "Stop"
 	todas as outras ficam inivisiveis
 
 
+###### Atualizar a Powershell ######
+
+	http://woshub.com/install-update-powershell-windows/#h2_1
+
+
+###### Instalar as ferramentas da AD DS para a powershell ######
+
+	https://4sysops.com/wiki/how-to-install-the-powershell-active-directory-module/#windows-server-2012-windows-server-2012-r2-windows-server-2016-windows-server-2019-windows-server-2022
+
+
 ######  Formato do JSON  ###### 
 
 {

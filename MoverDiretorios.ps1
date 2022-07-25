@@ -17,7 +17,7 @@ function CreateFolders () {
     )
     Write-Host "A criar pastas..."
     $erro = 0
-    $msgErro = "Ocorreu um erro ao mover as seguintes pastas:"
+    $msgErro = "Ocorreu um erro ao criar as seguintes pastas:"
     #Criar lista para adicionar ao novo JSON no caso de dar erro
     $list = New-Object System.Collections.ArrayList
 
@@ -130,27 +130,21 @@ function AtribuirPermissoes () {
 
 }
 
-# function CreateNewObject() {
-#     param(
-#         [Parameter(Mandatory = $true)] $objetoInserir, 
-#         [Parameter(Mandatory = $true)] $tipo  ## Se é criar ou mover
-#     )
-# }
 
 function TestIfUserOrGroupExists() {
     param(
         [Parameter(Mandatory = $true)] $Nome, #nome grupo ou utilizador
         [Parameter(Mandatory = $true)] $Tipo #se é grupo ou utilizador
     )
-    $existe = False
+    $existe = $false
     try {
         if ($tipo.ToLower() -eq "utilizador") {
             Get-ADUser -Identity $Nome
-            $existe = True
+            $existe = $true
         }
         elseif ($tipo.ToLower() -eq "grupo") {
             Get-ADGroup -Identity $Nome
-            $existe = True
+            $existe = $true
         }
         else {
             Write-Host "Tipo de identidade da permissão nao existe" -ForegroundColor Red
@@ -158,7 +152,7 @@ function TestIfUserOrGroupExists() {
     }
     catch {
         Write-Host "Utilizador/Grupo '"$nome"' nao existe." -ForegroundColor Red
-        $existe = False
+        $existe = $false
     }
     return $existe
 }

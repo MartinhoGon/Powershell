@@ -3,48 +3,65 @@
 ##             20/07/2022             ##
 ########################################
 
+### Objecto ACL
+# FileSystemRights  : FullControl
+# AccessControlType : Allow
+# IdentityReference : CM-ALVAIAZERE\airc
+# IsInherited       : False
+# InheritanceFlags  : ContainerInherit, ObjectInherit
+# PropagationFlags  : None
+
 param(
     [Parameter(Mandatory = $true)] $JSONFile
 )
 
-function RemoverPerissoes() {
+function RemoverPermissoes() {
     param(
         [Parameter(Mandatory = $true)] $jsonObject
     )
 
     foreach ($pasta in $jsonObject) {
         try {
-            ## Remover permissões da pasta Mãe
-            $permissoesPastaMae = get-acl $folder.path  | ForEach-Object { $_.Access }
-            $ACLPastaMae = get-acl $folder.path
+            if (-Not (Test-Path -Path $pasta.path)) {
+                Write-Host "A pasta:"$pasta.path"nao existe!" -ForegroundColor Red
+                continue
+            }
 
-            write-host "A remover permissões a pasta:" $folder.path -ForegroundColor Yellow
+            ## Remover permissões da pasta Mãe
+            $permissoesPastaMae = get-acl $pasta.path  | ForEach-Object { $_.Access }
+            $ACLPastaMae = get-acl $pasta.path
+
+            write-host "A remover permissoes a pasta:" $pasta.path -ForegroundColor Yellow
 
             foreach ($acl in $permissoesPastaMae) {
-                Write-Host $acl.IdentityReference "-" $acl.FileSystemRights "-" $acl.AccessControlType
-                $AccessRule = New-Object System.Security.AccessControl.FileSystemAccessRule($acl.IdentityReference, $acl.FileSystemRights, $acl.InheritanceFlags, $acl.PropagationFlags, $acl.AccessControlType)
-                # write-host $AccessRule
-                $ACLPastaMae.RemoveAccessRule($AccessRule)
-            }
-            $ACLPastaMae | Set-acl $folder.path
-
-            ## Remover as permissões das pastas filhos
-            $folders = Get-ChildItem -Directory -Path $folder.path -Recurse
-
-            ## Percorre as pastas filho e remove as ACLs para cada uma delas 
-            foreach ($folder in $folders) {
-                # $permissoesFilho = Get-ChildItem -Path $folder.FullName -Recurse | Get-ACL  | ForEach-Object { $_.Access }
-                $permissoesFilho = get-acl $folder.FullName | ForEach-Object { $_.Access }
-
-                write-host "Sub-Pasta:"$folder.FullName -ForegroundColor Yellow
-                $ACLPasta = get-acl $folder.FullName
-
-                foreach ($acl in $permissoesFilho) {
+                if(-Not $acl.IsInherited){
                     Write-Host $acl.IdentityReference "-" $acl.FileSystemRights "-" $acl.AccessControlType
                     $AccessRule = New-Object System.Security.AccessControl.FileSystemAccessRule($acl.IdentityReference, $acl.FileSystemRights, $acl.InheritanceFlags, $acl.PropagationFlags, $acl.AccessControlType)
-                    $ACLPasta.RemoveAccessRule($AccessRule)
+                    # write-host $AccessRule
+                    $ACLPastaMae.RemoveAccessRule($AccessRule)
                 }
-                $ACLPasta | Set-Acl $folder.FullName
+            }
+            $ACLPastaMae | Set-acl $pasta.path
+
+            ## Remover as permissões das pastas filhos
+            $folders = Get-ChildItem -Directory -Path $pasta.path -Recurse
+
+            ## Percorre as pastas filho e remove as ACLs para cada uma delas 
+            foreach ($folderChild in $folders) {
+                # $permissoesFilho = Get-ChildItem -Path $folder.FullName -Recurse | Get-ACL  | ForEach-Object { $_.Access }
+                $permissoesFilho = get-acl $folderChild.FullName | ForEach-Object { $_.Access }
+
+                write-host "Sub-Pasta:"$folderChild.FullName -ForegroundColor Yellow
+                $ACLPasta = get-acl $folderChild.FullName
+
+                foreach ($acl in $permissoesFilho) {
+                    if(-Not $acl.IsInherited){
+                        Write-Host $acl.IdentityReference "-" $acl.FileSystemRights "-" $acl.AccessControlType
+                        $AccessRule = New-Object System.Security.AccessControl.FileSystemAccessRule($acl.IdentityReference, $acl.FileSystemRights, $acl.InheritanceFlags, $acl.PropagationFlags, $acl.AccessControlType)
+                        $ACLPasta.RemoveAccessRule($AccessRule)
+                    }
+                }
+                $ACLPasta | Set-Acl $folderChild.FullName
             }
 
         }
@@ -62,7 +79,7 @@ try {
     $continuar = Read-Host "Tem a certeza que pretende continuar? (s/n)"
     if ($continuar.ToLower() -eq 's' ) {
         if ($json.mover.Count -gt 0) {
-            RemoverPerissoes -jsonObject $json.mover
+            RemoverPermissoes -jsonObject $json.mover
         }
     }
 
