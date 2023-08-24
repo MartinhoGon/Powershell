@@ -27,8 +27,8 @@
     ],
     "mover": [
         {
-            "name": "Ação Socialll",
-            "path": "C:/Teste_Mudança_NAS/Partilhados/Ação Socialll",
+            "name": "Ação Social",
+            "path": "C:/Teste_Mudança_NAS/Partilhados/Ação Social",
             "destination": "C:/Teste_Mudança_NAS/Partilha/Serviços/Desenvolvimento Social e Educação/",
             "permissions": [
                 {
@@ -142,19 +142,6 @@
             "permissions": [
                 {
                     "nome": "turismo",
-                    "permissao": "Modify",
-                    "heranca": "ContainerInherit,ObjectInherit",
-                    "tipo": "utilizador"
-                }
-            ]
-        },
-        {
-            "name": "Inexistente",
-            "path": "C:/Teste_Mudança_NAS/Partilhados/Inexistente",
-            "destination": "C:/Teste_Mudança_NAS/Partilha/Pessoais/",
-            "permissions": [
-                {
-                    "nome": "inexistente",
                     "permissao": "Modify",
                     "heranca": "ContainerInherit,ObjectInherit",
                     "tipo": "utilizador"
