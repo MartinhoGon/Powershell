@@ -19,10 +19,10 @@ function ValidarPastas {
         $erro = 0
         $naoExistem = ""
         foreach ($pasta in $jsonObject) {
-            Write-Host $pasta.name
             if (Test-Path -Path $pasta.path) {
-                
+                Write-Host $pasta.name -ForegroundColor Green
             }else{
+                Write-Host $pasta.name -ForegroundColor Red
                 $naoExistem = $naoExistem + "`n" + $pasta.name
                 $erro = 1;
             }
