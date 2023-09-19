@@ -11,14 +11,29 @@
 # InheritanceFlags  : ContainerInherit, ObjectInherit
 # PropagationFlags  : None
 
+########### parameters #####
+#
+#  jsonFile - ficheiros json das pastas
+#  users - utilizadores separados por ',' - o primeiro utilizador será definido como Owner da pasta - serão dadas permissões de full control
+#
+#
+
 param(
-    [Parameter(Mandatory = $true)] $JSONFile
+    [Parameter(Mandatory = $true)] $JSONFile,
+    [Parameter(Mandatory = $true)] $users
 )
 
 function RemoverPermissoes() {
     param(
-        [Parameter(Mandatory = $true)] $jsonObject
+        [Parameter(Mandatory = $true)] $jsonObject,
+        [Parameter(Mandatory = $true)] $users
     )
+
+    $usersArray = $users.Split(",")
+
+    # foreach ($user in $usersArray){
+    #     Write-Host $user
+    # }
 
     foreach ($pasta in $jsonObject) {
         try {
@@ -41,6 +56,12 @@ function RemoverPermissoes() {
                     $ACLPastaMae.RemoveAccessRule($AccessRule)
                 }
             }
+            foreach ($user in $usersArray){
+                $AccessRule = New-Object System.Security.AccessControl.FileSystemAccessRule($user, "FullControl", "ContainerInherit,ObjectInherit", "None", "Allow")
+                $ACLPastaMae.SetAccessRule($AccessRule)
+            }
+            # $ACLPastaMae.setOwner([System.Security.Principal.NTAccount]$usersArray[0])
+            # Set-Owner -Path $pasta.path -Account $usersArray[0]
             $ACLPastaMae | Set-acl $pasta.path
 
             ## Remover as permissões das pastas filhos
@@ -61,12 +82,19 @@ function RemoverPermissoes() {
                         $ACLPasta.RemoveAccessRule($AccessRule)
                     }
                 }
+                foreach ($user in $usersArray){
+                    $AccessRule = New-Object System.Security.AccessControl.FileSystemAccessRule($user, "FullControl", "ContainerInherit,ObjectInherit", "None", "Allow")
+                    $ACLPasta.SetAccessRule($AccessRule)
+                }
+                # $ACLPasta.setOwner([System.Security.Principal.NTAccount]$usersArray[0])
+                # Set-Owner -Path $folderChild.FullName -Account $usersArray[0]
                 $ACLPasta | Set-Acl $folderChild.FullName
             }
 
         }
         catch {
-            Write-Host "Ocorreu um erro ao reover as permissoes da pasta: " $pasta.name -ForegroundColor Red
+            Write-Warning $Error[0]
+            Write-Host "Ocorreu um erro ao remover as permissoes da pasta: " $pasta.name -ForegroundColor Red
         }
     }
 
@@ -79,7 +107,7 @@ try {
     $continuar = Read-Host "Tem a certeza que pretende continuar? (s/n)"
     if ($continuar.ToLower() -eq 's' ) {
         if ($json.mover.Count -gt 0) {
-            RemoverPermissoes -jsonObject $json.mover
+            RemoverPermissoes -jsonObject $json.mover -users $users
         }
     }
 

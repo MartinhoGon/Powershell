@@ -12,7 +12,7 @@ function ValidarPastas {
     param(
         [Parameter(Mandatory = $true)] $jsonObject #pastas
     )
-    Write-Host "A validar pastas..."
+    Write-Host "A validar pastas..." -ForegroundColor Yellow
 
 
     try {
@@ -20,9 +20,9 @@ function ValidarPastas {
         $naoExistem = ""
         foreach ($pasta in $jsonObject) {
             if (Test-Path -Path $pasta.path) {
-                Write-Host $pasta.name -ForegroundColor Green
+                #Write-Host $pasta.name -ForegroundColor Green
             }else{
-                Write-Host $pasta.name -ForegroundColor Red
+                #Write-Host $pasta.name -ForegroundColor Red
                 $naoExistem = $naoExistem + "`n" + $pasta.name
                 $erro = 1;
             }
