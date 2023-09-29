@@ -1,0 +1,55 @@
+{
+    "criar": [
+        {
+            "name": "Contratação Pública, Acessoria e Fiscalização",
+            "destination": "F:/Partilha/Serviços/",
+            "permissions": [
+                {
+                    "nome": "Utilizadores - GCPAF",
+                    "permissao": "ListDirectory",
+                    "heranca": "ContainerInherit,ObjectInherit",
+                    "tipo": "grupo"
+                },
+                {
+                    "nome": "Utilizadores - Executivo",
+                    "permissao": "Modify",
+                    "heranca": "ContainerInherit,ObjectInherit",
+                    "tipo": "grupo"
+                },
+                {
+                    "nome": "Utilizadores - GAP",
+                    "permissao": "Modify",
+                    "heranca": "ContainerInherit,ObjectInherit",
+                    "tipo": "grupo"
+                },
+                {
+                    "nome": "Utilizadores - GAV",
+                    "permissao": "Modify",
+                    "heranca": "ContainerInherit,ObjectInherit",
+                    "tipo": "grupo"
+                },
+                {
+                    "nome": "Administradores - NAS",
+                    "permissao": "Modify",
+                    "heranca": "ContainerInherit,ObjectInherit",
+                    "tipo": "grupo"
+                }
+            ]
+        }
+    ],
+    "mover": [
+        {
+            "name": "GCPAF-teste",
+            "path": "F:/Partilhados/GCPAF-teste",
+            "destination": "F:/Partilha/Serviços/Contratação Pública, Acessoria e Fiscalização",
+            "permissions": [
+                {
+                    "nome": "Utilizadores - Contratação Pública",
+                    "permissao": "Modify",
+                    "heranca": "ContainerInherit,ObjectInherit",
+                    "tipo": "grupo"
+                }
+            ]
+        }
+    ]
+}
